@@ -1,8 +1,8 @@
 {
   "name": "react-lz-editor",
-  "version": "1.0.3",
+  "version": "0.12.2",
   "description": "An open source react editor based on draft-Js and ant design, good support HTML, markdown and Draft Raw format.",
-  "main": "index.js",
+  "main": "publish/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
@@ -64,5 +64,8 @@
     "react-dom": "^15.4.2",
     "synthetic-dom": "^0.2.1",
     "whatwg-fetch": "^2.0.3"
-  }
+  },
+  "files": [
+    "publish"
+  ]
 }

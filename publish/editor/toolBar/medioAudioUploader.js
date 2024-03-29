@@ -1,28 +1,10 @@
 'use strict';
 
-
-
-var _modal = require('antd/lib/modal');
-
-var _modal2 = _interopRequireDefault(_modal);
-
-
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _antd = require('antd');
 
 var _businessComponents = require('../../global/components/businessComponents');
 
@@ -40,7 +22,7 @@ var AudioStyleControls = function (_Component) {
   function AudioStyleControls(props) {
     _classCallCheck(this, AudioStyleControls);
 
-    var _this = _possibleConstructorReturn(this, (AudioStyleControls.__proto__ || Object.getPrototypeOf(AudioStyleControls)).call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.state = {
       visible: false,
@@ -52,82 +34,75 @@ var AudioStyleControls = function (_Component) {
     return _this;
   }
 
-  _createClass(AudioStyleControls, [{
-    key: 'getAudioObject',
-    value: function getAudioObject(fileObj) {
-      this.state.audios = this.state.audios.concat(fileObj);
-      if (!!this.state.audios) {
-        this.setState({ disabled: false });
-      }
-      this.forceUpdate();
+  AudioStyleControls.prototype.getAudioObject = function getAudioObject(fileObj) {
+    this.state.audios = this.state.audios.concat(fileObj);
+    if (!!this.state.audios) {
+      this.setState({ disabled: false });
     }
-  }, {
-    key: 'onAudioToggle',
-    value: function onAudioToggle() {
-      this.setState({ visible: true, disabled: true, audios: [] });
-    }
-  }, {
-    key: 'sendAudioToEditor',
-    value: function sendAudioToEditor() {
-      this.setState({ visible: false });
-      var audios = this.state.audios.map(function (item) {
-        return item;
-      });
-      this.props.receiveAudio(audios);
-      this.state.audios = [];
-      this.forceUpdate();
-    }
-  }, {
-    key: 'handleCancel',
-    value: function handleCancel(e) {
-      this.setState({ visible: false });
-      this.state.audios = [];
-      this.forceUpdate();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var className = 'RichEditor-styleButton';
-      var that = this;
-      return _react2.default.createElement(
-        'div',
-        { className: 'RichEditor-controls' },
-        _react2.default.createElement(
-          'span',
-          { className: className, onClick: that.onAudioToggle },
-          _react2.default.createElement(_icon2.default, { type: 'editor_audio', title: this.props.lang.insertAudioTip })
-        ),
-        _react2.default.createElement(
-          _modal2.default,
-          {
-            title: this.props.lang.insertAudioModalTitle,
-            visible: that.state.visible,
-            closable: false,
-            footer: [_react2.default.createElement(
-              _button2.default,
-              { key: 'back', size: 'large', onClick: that.handleCancel },
-              ' ',
-              this.props.lang.cancelText,
-              ' '
-            ), _react2.default.createElement(
-              _button2.default,
-              { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendAudioToEditor },
-              this.props.lang.OKText,
-              ' '
-            )] },
-          _react2.default.createElement(_businessComponents.UploadImage, { isMultiple: true,
-            fileList: that.state.audios,
-            isOpenModel: that.state.visible,
-            limit: 10,
-            cbReceiver: that.getAudioObject,
-            fileType: 'audio',
-            uploadConfig: this.props.uploadConfig,
-            uploadProps: this.props.uploadProps,
-            lang: this.props.lang })
-        )
-      );
-    }
-  }]);
+    this.forceUpdate();
+  };
+
+  AudioStyleControls.prototype.onAudioToggle = function onAudioToggle() {
+    this.setState({ visible: true, disabled: true, audios: [] });
+  };
+
+  AudioStyleControls.prototype.sendAudioToEditor = function sendAudioToEditor() {
+    this.setState({ visible: false });
+    var audios = this.state.audios.map(function (item) {
+      return item;
+    });
+    this.props.receiveAudio(audios);
+    this.state.audios = [];
+    this.forceUpdate();
+  };
+
+  AudioStyleControls.prototype.handleCancel = function handleCancel(e) {
+    this.setState({ visible: false });
+    this.state.audios = [];
+    this.forceUpdate();
+  };
+
+  AudioStyleControls.prototype.render = function render() {
+    var className = 'RichEditor-styleButton';
+    var that = this;
+    return _react2.default.createElement(
+      'div',
+      { className: 'RichEditor-controls' },
+      _react2.default.createElement(
+        'span',
+        { className: className, onClick: that.onAudioToggle },
+        _react2.default.createElement(_antd.Icon, { type: 'editor_audio', title: this.props.lang.insertAudioTip })
+      ),
+      _react2.default.createElement(
+        _antd.Modal,
+        {
+          title: this.props.lang.insertAudioModalTitle,
+          visible: that.state.visible,
+          closable: false,
+          footer: [_react2.default.createElement(
+            _antd.Button,
+            { key: 'back', size: 'large', onClick: that.handleCancel },
+            ' ',
+            this.props.lang.cancelText,
+            ' '
+          ), _react2.default.createElement(
+            _antd.Button,
+            { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendAudioToEditor },
+            this.props.lang.OKText,
+            ' '
+          )] },
+        _react2.default.createElement(_businessComponents.UploadImage, { isMultiple: true,
+          fileList: that.state.audios,
+          isOpenModel: that.state.visible,
+          limit: 10,
+          cbReceiver: that.getAudioObject,
+          fileType: 'audio',
+          uploadConfig: this.props.uploadConfig,
+          uploadProps: this.props.uploadProps,
+          lang: this.props.lang })
+      )
+    );
+  };
 
   return AudioStyleControls;
 }(_react.Component);

@@ -1,28 +1,10 @@
 'use strict';
 
-
-
-var _modal = require('antd/lib/modal');
-
-var _modal2 = _interopRequireDefault(_modal);
-
-
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _antd = require('antd');
 
 var _businessComponents = require('../../global/components/businessComponents');
 
@@ -40,7 +22,7 @@ var VideoStyleControls = function (_Component) {
   function VideoStyleControls(props) {
     _classCallCheck(this, VideoStyleControls);
 
-    var _this = _possibleConstructorReturn(this, (VideoStyleControls.__proto__ || Object.getPrototypeOf(VideoStyleControls)).call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.state = {
       visible: false,
@@ -54,83 +36,76 @@ var VideoStyleControls = function (_Component) {
     return _this;
   }
 
-  _createClass(VideoStyleControls, [{
-    key: 'getVideoObject',
-    value: function getVideoObject(fileObj) {
-      this.state.videos = this.state.videos.concat(fileObj);
-      if (!!this.state.videos) {
-        this.setState({ disabled: false });
-      }
-      this.forceUpdate();
+  VideoStyleControls.prototype.getVideoObject = function getVideoObject(fileObj) {
+    this.state.videos = this.state.videos.concat(fileObj);
+    if (!!this.state.videos) {
+      this.setState({ disabled: false });
     }
-  }, {
-    key: 'sendVideoToEditor',
-    value: function sendVideoToEditor() {
-      this.setState({ visible: false });
-      var videos = this.state.videos.map(function (item) {
-        return item;
-      });
-      this.props.receiveVideo(videos);
-      this.state.videos = [];
-      this.forceUpdate();
-    }
-  }, {
-    key: 'onVideoToggle',
-    value: function onVideoToggle() {
-      this.setState({ visible: true, disabled: true, videos: [] });
-    }
-  }, {
-    key: 'handleCancel',
-    value: function handleCancel(e) {
-      this.setState({ visible: false });
-      this.state.videos = [];
-      this.forceUpdate();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var className = 'RichEditor-styleButton';
-      var that = this;
-      return _react2.default.createElement(
-        'div',
-        { className: 'RichEditor-controls' },
-        _react2.default.createElement(
-          'span',
-          { className: className, onClick: that.onVideoToggle },
-          _react2.default.createElement(_icon2.default, { type: 'editor_video', title: this.props.lang.insertVideoTip })
-        ),
-        _react2.default.createElement(
-          _modal2.default,
-          {
-            title: this.props.lang.insertVideoModalTitle,
-            visible: that.state.visible,
-            closable: false,
-            footer: [_react2.default.createElement(
-              _button2.default,
-              { key: 'back', size: 'large', onClick: that.handleCancel },
-              ' ',
-              this.props.lang.cancelText,
-              ' '
-            ), _react2.default.createElement(
-              _button2.default,
-              { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendVideoToEditor },
-              ' ',
-              this.props.lang.OKText,
-              ' '
-            )] },
-          _react2.default.createElement(_businessComponents.UploadImage, { isMultiple: true,
-            limit: 10,
-            fileList: that.state.videos,
-            isOpenModel: that.state.visible,
-            cbReceiver: that.getVideoObject,
-            uploadConfig: this.props.uploadConfig,
-            lang: this.props.lang,
-            fileType: 'video',
-            uploadProps: this.props.uploadProps })
-        )
-      );
-    }
-  }]);
+    this.forceUpdate();
+  };
+
+  VideoStyleControls.prototype.sendVideoToEditor = function sendVideoToEditor() {
+    this.setState({ visible: false });
+    var videos = this.state.videos.map(function (item) {
+      return item;
+    });
+    this.props.receiveVideo(videos);
+    this.state.videos = [];
+    this.forceUpdate();
+  };
+
+  VideoStyleControls.prototype.onVideoToggle = function onVideoToggle() {
+    this.setState({ visible: true, disabled: true, videos: [] });
+  };
+
+  VideoStyleControls.prototype.handleCancel = function handleCancel(e) {
+    this.setState({ visible: false });
+    this.state.videos = [];
+    this.forceUpdate();
+  };
+
+  VideoStyleControls.prototype.render = function render() {
+    var className = 'RichEditor-styleButton';
+    var that = this;
+    return _react2.default.createElement(
+      'div',
+      { className: 'RichEditor-controls' },
+      _react2.default.createElement(
+        'span',
+        { className: className, onClick: that.onVideoToggle },
+        _react2.default.createElement(_antd.Icon, { type: 'editor_video', title: this.props.lang.insertVideoTip })
+      ),
+      _react2.default.createElement(
+        _antd.Modal,
+        {
+          title: this.props.lang.insertVideoModalTitle,
+          visible: that.state.visible,
+          closable: false,
+          footer: [_react2.default.createElement(
+            _antd.Button,
+            { key: 'back', size: 'large', onClick: that.handleCancel },
+            ' ',
+            this.props.lang.cancelText,
+            ' '
+          ), _react2.default.createElement(
+            _antd.Button,
+            { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendVideoToEditor },
+            ' ',
+            this.props.lang.OKText,
+            ' '
+          )] },
+        _react2.default.createElement(_businessComponents.UploadImage, { isMultiple: true,
+          limit: 10,
+          fileList: that.state.videos,
+          isOpenModel: that.state.visible,
+          cbReceiver: that.getVideoObject,
+          uploadConfig: this.props.uploadConfig,
+          lang: this.props.lang,
+          fileType: 'video',
+          uploadProps: this.props.uploadProps })
+      )
+    );
+  };
 
   return VideoStyleControls;
 }(_react.Component);

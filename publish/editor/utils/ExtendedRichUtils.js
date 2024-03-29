@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+exports.__esModule = true;
 exports.ALIGNMENT_DATA_KEY = exports.ALIGNMENTS = undefined;
 
 var _draftJs = require('draft-js');

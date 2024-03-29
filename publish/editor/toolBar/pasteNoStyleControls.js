@@ -1,31 +1,5 @@
 'use strict';
 
-
-
-var _modal = require('antd/lib/modal');
-
-var _modal2 = _interopRequireDefault(_modal);
-
-
-
-var _input = require('antd/lib/input');
-
-var _input2 = _interopRequireDefault(_input);
-
-
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,6 +7,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _antd = require('antd');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48,7 +24,7 @@ var PasteNoStyleControls = function (_Component) {
   function PasteNoStyleControls(props) {
     _classCallCheck(this, PasteNoStyleControls);
 
-    var _this = _possibleConstructorReturn(this, (PasteNoStyleControls.__proto__ || Object.getPrototypeOf(PasteNoStyleControls)).call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.state = {
       visible: false,
@@ -61,78 +37,70 @@ var PasteNoStyleControls = function (_Component) {
     return _this;
   }
 
-  _createClass(PasteNoStyleControls, [{
-    key: 'pasteContent',
-    value: function pasteContent(e) {
-      var _this2 = this;
+  PasteNoStyleControls.prototype.pasteContent = function pasteContent(e) {
+    var _this2 = this;
 
-      this.state.plantext = e.target.value;
-      this.forceUpdate();
-      setTimeout(function () {
-        if (!!_this2.state.plantext) {
-          _this2.setState({ disabled: false });
-        }
-      }, 100);
-    }
-  }, {
-    key: 'sendTextToEditor',
-    value: function sendTextToEditor() {
-      var text = this.state.plantext + "";
-      this.props.receiveText(text);
-      this.setState({ visible: false, plantext: "" });
-    }
-  }, {
-    key: 'onTextToggle',
-    value: function onTextToggle() {
-      this.setState({ visible: true, disabled: true, plantext: "" });
-    }
-  }, {
-    key: 'handleCancel',
-    value: function handleCancel(e) {
-      this.setState({ visible: false });
-      this.state.plantext = "";
-      this.forceUpdate();
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {}
-  }, {
-    key: 'render',
-    value: function render() {
-      var className = 'RichEditor-styleButton';
-      var that = this;
-      return _react2.default.createElement(
-        'div',
-        { className: 'RichEditor-controls' },
-        _react2.default.createElement(
-          'span',
-          { className: className, onClick: that.onTextToggle, title: that.props.lang.pasteText },
-          _react2.default.createElement(_icon2.default, { key: 'paset_text', type: 'editor_paset_text' })
-        ),
-        _react2.default.createElement(
-          _modal2.default,
-          {
-            title: that.props.lang.insertNoStyleText,
-            visible: that.state.visible,
-            closable: false,
-            width: 800,
-            footer: [_react2.default.createElement(
-              _button2.default,
-              { key: 'back', size: 'large', onClick: that.handleCancel },
-              ' ',
-              that.props.lang.cancelText,
-              ' '
-            ), _react2.default.createElement(
-              _button2.default,
-              { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendTextToEditor },
-              that.props.lang.OKText,
-              '  '
-            )] },
-          _react2.default.createElement(_input2.default, { type: 'textarea', rows: 10, onChange: that.pasteContent, value: that.state.plantext, placeholder: that.props.lang.pasteTipMsg })
-        )
-      );
-    }
-  }]);
+    this.state.plantext = e.target.value;
+    this.forceUpdate();
+    setTimeout(function () {
+      if (!!_this2.state.plantext) {
+        _this2.setState({ disabled: false });
+      }
+    }, 100);
+  };
+
+  PasteNoStyleControls.prototype.sendTextToEditor = function sendTextToEditor() {
+    var text = this.state.plantext + "";
+    this.props.receiveText(text);
+    this.setState({ visible: false, plantext: "" });
+  };
+
+  PasteNoStyleControls.prototype.onTextToggle = function onTextToggle() {
+    this.setState({ visible: true, disabled: true, plantext: "" });
+  };
+
+  PasteNoStyleControls.prototype.handleCancel = function handleCancel(e) {
+    this.setState({ visible: false });
+    this.state.plantext = "";
+    this.forceUpdate();
+  };
+
+  PasteNoStyleControls.prototype.componentDidMount = function componentDidMount() {};
+
+  PasteNoStyleControls.prototype.render = function render() {
+    var className = 'RichEditor-styleButton';
+    var that = this;
+    return _react2.default.createElement(
+      'div',
+      { className: 'RichEditor-controls' },
+      _react2.default.createElement(
+        'span',
+        { className: className, onClick: that.onTextToggle, title: that.props.lang.pasteText },
+        _react2.default.createElement(_antd.Icon, { key: 'paset_text', type: 'editor_paset_text' })
+      ),
+      _react2.default.createElement(
+        _antd.Modal,
+        {
+          title: that.props.lang.insertNoStyleText,
+          visible: that.state.visible,
+          closable: false,
+          width: 800,
+          footer: [_react2.default.createElement(
+            _antd.Button,
+            { key: 'back', size: 'large', onClick: that.handleCancel },
+            ' ',
+            that.props.lang.cancelText,
+            ' '
+          ), _react2.default.createElement(
+            _antd.Button,
+            { key: 'submit', type: 'primary', size: 'large', disabled: that.state.disabled, onClick: that.sendTextToEditor },
+            that.props.lang.OKText,
+            '  '
+          )] },
+        _react2.default.createElement(_antd.Input, { type: 'textarea', rows: 10, onChange: that.pasteContent, value: that.state.plantext, placeholder: that.props.lang.pasteTipMsg })
+      )
+    );
+  };
 
   return PasteNoStyleControls;
 }(_react.Component);

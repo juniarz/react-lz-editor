@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+exports.__esModule = true;
 var getCurrentlySelectedBlock = function getCurrentlySelectedBlock(editorState) {
 	var selection = editorState.getSelection();
 	var startKey = selection.getStartKey();

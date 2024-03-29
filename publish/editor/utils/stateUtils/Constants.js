@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 var BLOCK_TYPE = exports.BLOCK_TYPE = {
   UNSTYLED: 'unstyled',
   HEADER_ONE: 'header-one',

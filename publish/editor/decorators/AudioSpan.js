@@ -1,10 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.__esModule = true;
 
 var _react = require('react');
 
@@ -30,7 +26,7 @@ var AudioSpan = function (_Component) {
   function AudioSpan(props) {
     _classCallCheck(this, AudioSpan);
 
-    var _this = _possibleConstructorReturn(this, (AudioSpan.__proto__ || Object.getPrototypeOf(AudioSpan)).call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     var entity = _draftJs.Entity.get(_this.props.entityKey);
 
@@ -45,77 +41,71 @@ var AudioSpan = function (_Component) {
     return _this;
   }
 
-  _createClass(AudioSpan, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
+  AudioSpan.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
 
-      var _state = this.state,
-          width = _state.width,
-          height = _state.height;
+    var _state = this.state,
+        width = _state.width,
+        height = _state.height;
 
-      var entity = _draftJs.Entity.get(this.props.entityKey);
-      var audio = document.createElement('audio');
+    var entity = _draftJs.Entity.get(this.props.entityKey);
+    var audio = document.createElement('audio');
 
-      var _entity$getData2 = entity.getData(),
-          src = _entity$getData2.src;
+    var _entity$getData2 = entity.getData(),
+        src = _entity$getData2.src;
 
-      audio.src = src;
-      audio.onload = function () {
-        if (width == null || height == null) {
-          _this2.setState({ width: audio.width, height: audio.height });
-          _draftJs.Entity.mergeData(_this2.props.entityKey, {
-            width: audio.width,
-            height: audio.height,
-            originalWidth: audio.width,
-            originalHeight: audio.height
-          });
-        }
-      };
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _state2 = this.state,
-          width = _state2.width,
-          height = _state2.height;
+    audio.src = src;
+    audio.onload = function () {
+      if (width == null || height == null) {
+        _this2.setState({ width: audio.width, height: audio.height });
+        _draftJs.Entity.mergeData(_this2.props.entityKey, {
+          width: audio.width,
+          height: audio.height,
+          originalWidth: audio.width,
+          originalHeight: audio.height
+        });
+      }
+    };
+  };
 
-      var entity = _draftJs.Entity.get(this.props.entityKey);
+  AudioSpan.prototype.render = function render() {
+    var _state2 = this.state,
+        width = _state2.width,
+        height = _state2.height;
 
-      var _entity$getData3 = entity.getData(),
-          src = _entity$getData3.src;
+    var entity = _draftJs.Entity.get(this.props.entityKey);
 
-      var audioStyle = {
-        verticalAlign: 'bottom',
-        backgroundImage: 'url("' + src + '")',
-        backgroundSize: width + 'px ' + height + 'px',
-        lineHeight: height + 'px',
-        fontSize: height + 'px',
-        width: width,
-        height: height,
-        letterSpacing: width
-      };
+    var _entity$getData3 = entity.getData(),
+        src = _entity$getData3.src;
 
-      return _react2.default.createElement(
-        'figure',
-        { className: 'editor-inline-audio', onClick: this._onClick },
-        _react2.default.createElement('audio', { controls: true, src: '' + src, className: 'media-audio' })
-      );
-    }
-  }, {
-    key: '_onClick',
-    value: function _onClick() {}
-  }, {
-    key: '_handleResize',
-    value: function _handleResize(event, data) {
-      var _data$size = data.size,
-          width = _data$size.width,
-          height = _data$size.height;
+    var audioStyle = {
+      verticalAlign: 'bottom',
+      backgroundImage: 'url("' + src + '")',
+      backgroundSize: width + 'px ' + height + 'px',
+      lineHeight: height + 'px',
+      fontSize: height + 'px',
+      width: width,
+      height: height,
+      letterSpacing: width
+    };
 
-      this.setState({ width: width, height: height });
-      _draftJs.Entity.mergeData(this.props.entityKey, { width: width, height: height });
-    }
-  }]);
+    return _react2.default.createElement(
+      'figure',
+      { className: 'editor-inline-audio', onClick: this._onClick },
+      _react2.default.createElement('audio', { controls: true, src: '' + src, className: 'media-audio' })
+    );
+  };
+
+  AudioSpan.prototype._onClick = function _onClick() {};
+
+  AudioSpan.prototype._handleResize = function _handleResize(event, data) {
+    var _data$size = data.size,
+        width = _data$size.width,
+        height = _data$size.height;
+
+    this.setState({ width: width, height: height });
+    _draftJs.Entity.mergeData(this.props.entityKey, { width: width, height: height });
+  };
 
   return AudioSpan;
 }(_react.Component);

@@ -1,7 +1,5 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -24,50 +22,51 @@ var InlineStyleControls = function (_Component) {
   function InlineStyleControls(props) {
     _classCallCheck(this, InlineStyleControls);
 
-    return _possibleConstructorReturn(this, (InlineStyleControls.__proto__ || Object.getPrototypeOf(InlineStyleControls)).call(this, props));
+    return _possibleConstructorReturn(this, _Component.call(this, props));
   }
 
-  _createClass(InlineStyleControls, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          editorState = _props.editorState,
-          onToggle = _props.onToggle,
-          lang = _props.lang;
+  InlineStyleControls.prototype.render = function render() {
+    var _props = this.props,
+        editorState = _props.editorState,
+        onToggle = _props.onToggle,
+        lang = _props.lang;
 
-      var INLINE_STYLES = [{
-        text: lang.textBold,
-        style: 'BOLD',
-        label: "editor_b"
-      }, {
-        text: lang.textItalic,
-        style: 'ITALIC',
-        label: "editor_i"
-      }, {
-        text: lang.textUnderline,
-        style: 'UNDERLINE',
-        label: "editor_u"
-      }, {
-        text: lang.textCode,
-        style: 'CODE',
-        label: "editor_e"
-      }];
-      var currentStyle = editorState ? editorState.getCurrentInlineStyle() : {};
-      return _react2.default.createElement(
-        'div',
-        { className: 'RichEditor-controls' },
-        INLINE_STYLES.map(function (type, i) {
-          return _react2.default.createElement(_styleButton2.default, {
-            key: type.style,
-            text: type.text,
-            active: currentStyle.has(type.style),
-            label: type.label,
-            onToggle: onToggle,
-            style: type.style });
-        })
-      );
-    }
-  }]);
+    var INLINE_STYLES = [{
+      text: lang.textBold,
+      style: 'BOLD',
+      label: "editor_b"
+    }, {
+      text: lang.textItalic,
+      style: 'ITALIC',
+      label: "editor_i"
+    }, {
+      text: lang.textUnderline,
+      style: 'UNDERLINE',
+      label: "editor_u"
+    }, {
+      text: lang.textCode,
+      style: 'CODE',
+      label: "editor_e"
+    }, {
+      text: lang.textStrikethrough,
+      style: 'STRIKETHROUGH',
+      label: 'editor_s'
+    }];
+    var currentStyle = editorState ? editorState.getCurrentInlineStyle() : {};
+    return _react2.default.createElement(
+      'div',
+      { className: 'RichEditor-controls' },
+      INLINE_STYLES.map(function (type, i) {
+        return _react2.default.createElement(_styleButton2.default, {
+          key: type.style,
+          text: type.text,
+          active: currentStyle.has(type.style),
+          label: type.label,
+          onToggle: onToggle,
+          style: type.style });
+      })
+    );
+  };
 
   return InlineStyleControls;
 }(_react.Component);

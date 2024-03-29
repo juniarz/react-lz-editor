@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 
 var ATTR_NAME_MAP = {
   acceptCharset: 'accept-charset',
@@ -17,36 +15,27 @@ function normalizeAttributes(attributes) {
   }
   var normalized = {};
   var didNormalize = false;
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  for (var _iterator = Object.keys(attributes), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref;
 
-  try {
-    for (var _iterator = Object.keys(attributes)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var name = _step.value;
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref = _i.value;
+    }
 
-      var newName = name;
-      if (ATTR_NAME_MAP.hasOwnProperty(name)) {
-        newName = ATTR_NAME_MAP[name];
-        didNormalize = true;
-      }
-      normalized[newName] = attributes[name];
+    var name = _ref;
+
+    var newName = name;
+    if (ATTR_NAME_MAP.hasOwnProperty(name)) {
+      newName = ATTR_NAME_MAP[name];
+      didNormalize = true;
     }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
+    normalized[newName] = attributes[name];
   }
-
   return didNormalize ? normalized : attributes;
 }
 

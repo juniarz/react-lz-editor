@@ -1,10 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.__esModule = true;
 
 var _react = require('react');
 
@@ -30,7 +26,7 @@ var VideoSpan = function (_Component) {
   function VideoSpan(props) {
     _classCallCheck(this, VideoSpan);
 
-    var _this = _possibleConstructorReturn(this, (VideoSpan.__proto__ || Object.getPrototypeOf(VideoSpan)).call(this, props));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     var entity = _draftJs.Entity.get(_this.props.entityKey);
 
@@ -45,77 +41,71 @@ var VideoSpan = function (_Component) {
     return _this;
   }
 
-  _createClass(VideoSpan, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
+  VideoSpan.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
 
-      var _state = this.state,
-          width = _state.width,
-          height = _state.height;
+    var _state = this.state,
+        width = _state.width,
+        height = _state.height;
 
-      var entity = _draftJs.Entity.get(this.props.entityKey);
-      var video = document.createElement('video');
+    var entity = _draftJs.Entity.get(this.props.entityKey);
+    var video = document.createElement('video');
 
-      var _entity$getData2 = entity.getData(),
-          src = _entity$getData2.src;
+    var _entity$getData2 = entity.getData(),
+        src = _entity$getData2.src;
 
-      video.src = src;
-      video.onload = function () {
-        if (width == null || height == null) {
-          _this2.setState({ width: video.width, height: video.height });
-          _draftJs.Entity.mergeData(_this2.props.entityKey, {
-            width: video.width,
-            height: video.height,
-            originalWidth: video.width,
-            originalHeight: video.height
-          });
-        }
-      };
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _state2 = this.state,
-          width = _state2.width,
-          height = _state2.height;
+    video.src = src;
+    video.onload = function () {
+      if (width == null || height == null) {
+        _this2.setState({ width: video.width, height: video.height });
+        _draftJs.Entity.mergeData(_this2.props.entityKey, {
+          width: video.width,
+          height: video.height,
+          originalWidth: video.width,
+          originalHeight: video.height
+        });
+      }
+    };
+  };
 
-      var entity = _draftJs.Entity.get(this.props.entityKey);
+  VideoSpan.prototype.render = function render() {
+    var _state2 = this.state,
+        width = _state2.width,
+        height = _state2.height;
 
-      var _entity$getData3 = entity.getData(),
-          src = _entity$getData3.src;
+    var entity = _draftJs.Entity.get(this.props.entityKey);
 
-      var videoStyle = {
-        verticalAlign: 'bottom',
-        backgroundImage: 'url("' + src + '")',
-        backgroundSize: width + 'px ' + height + 'px',
-        lineHeight: height + 'px',
-        fontSize: height + 'px',
-        width: width,
-        height: height,
-        letterSpacing: width
-      };
+    var _entity$getData3 = entity.getData(),
+        src = _entity$getData3.src;
 
-      return _react2.default.createElement(
-        'figure',
-        { className: 'editor-inline-video', onClick: this._onClick },
-        _react2.default.createElement('video', { controls: 'controls', src: '' + src, className: 'media-video' })
-      );
-    }
-  }, {
-    key: '_onClick',
-    value: function _onClick() {}
-  }, {
-    key: '_handleResize',
-    value: function _handleResize(event, data) {
-      var _data$size = data.size,
-          width = _data$size.width,
-          height = _data$size.height;
+    var videoStyle = {
+      verticalAlign: 'bottom',
+      backgroundImage: 'url("' + src + '")',
+      backgroundSize: width + 'px ' + height + 'px',
+      lineHeight: height + 'px',
+      fontSize: height + 'px',
+      width: width,
+      height: height,
+      letterSpacing: width
+    };
 
-      this.setState({ width: width, height: height });
-      _draftJs.Entity.mergeData(this.props.entityKey, { width: width, height: height });
-    }
-  }]);
+    return _react2.default.createElement(
+      'figure',
+      { className: 'editor-inline-video', onClick: this._onClick },
+      _react2.default.createElement('video', { controls: 'controls', src: '' + src, className: 'media-video' })
+    );
+  };
+
+  VideoSpan.prototype._onClick = function _onClick() {};
+
+  VideoSpan.prototype._handleResize = function _handleResize(event, data) {
+    var _data$size = data.size,
+        width = _data$size.width,
+        height = _data$size.height;
+
+    this.setState({ width: width, height: height });
+    _draftJs.Entity.mergeData(this.props.entityKey, { width: width, height: height });
+  };
 
   return VideoSpan;
 }(_react.Component);

@@ -1,7 +1,5 @@
 "use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -26,35 +24,32 @@ var ColorControls = function (_Component) {
   function ColorControls(props) {
     _classCallCheck(this, ColorControls);
 
-    return _possibleConstructorReturn(this, (ColorControls.__proto__ || Object.getPrototypeOf(ColorControls)).call(this, props));
+    return _possibleConstructorReturn(this, _Component.call(this, props));
   }
 
-  _createClass(ColorControls, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
+  ColorControls.prototype.render = function render() {
+    var _this2 = this;
 
-      var currentStyle = this.props.editorState.getCurrentInlineStyle();
-      var COLORS = Object.keys(_colorConfig.colorStyleMap).map(function (item) {
-        return { label: '　', alias: item, style: item };
-      });
-      return _react2.default.createElement(
-        "div",
-        { className: "RichEditor-controls", style: {
-            paddingRight: "20px"
-          } },
-        COLORS.map(function (type, i) {
-          return _react2.default.createElement(_colorButton2.default, {
-            active: currentStyle.has(type.style),
-            label: type.label,
-            onToggle: _this2.props.onToggle,
-            style: type.style,
-            key: i,
-            split: i == COLORS.length - 1 ? "|" : "" });
-        })
-      );
-    }
-  }]);
+    var currentStyle = this.props.editorState.getCurrentInlineStyle();
+    var COLORS = Object.keys(_colorConfig.colorStyleMap).map(function (item) {
+      return { label: '　', alias: item, style: item };
+    });
+    return _react2.default.createElement(
+      "div",
+      { className: "RichEditor-controls", style: {
+          paddingRight: "20px"
+        } },
+      COLORS.map(function (type, i) {
+        return _react2.default.createElement(_colorButton2.default, {
+          active: currentStyle.has(type.style),
+          label: type.label,
+          onToggle: _this2.props.onToggle,
+          style: type.style,
+          key: i,
+          split: i == COLORS.length - 1 ? "|" : "" });
+      })
+    );
+  };
 
   return ColorControls;
 }(_react.Component);

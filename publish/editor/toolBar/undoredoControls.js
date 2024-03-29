@@ -1,16 +1,10 @@
 'use strict';
 
-
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _antd = require('antd');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,35 +20,32 @@ var undoRedo = function (_Component) {
   function undoRedo(props) {
     _classCallCheck(this, undoRedo);
 
-    return _possibleConstructorReturn(this, (undoRedo.__proto__ || Object.getPrototypeOf(undoRedo)).call(this, props));
+    return _possibleConstructorReturn(this, _Component.call(this, props));
   }
 
-  _createClass(undoRedo, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+  undoRedo.prototype.render = function render() {
+    var _this2 = this;
 
-      var className = 'RichEditor-styleButton';
-      return _react2.default.createElement(
-        'div',
-        { className: 'RichEditor-controls' },
-        _react2.default.createElement(
-          'span',
-          { className: 'RichEditor-styleButton', onClick: function onClick() {
-              return _this2.props.onToggle("undo");
-            }, title: this.props.lang.undo },
-          _react2.default.createElement(_icon2.default, { key: '_undo', type: 'editor_undo' })
-        ),
-        _react2.default.createElement(
-          'span',
-          { className: 'RichEditor-styleButton', onClick: function onClick() {
-              return _this2.props.onToggle("redo");
-            }, title: this.props.lang.redo },
-          _react2.default.createElement(_icon2.default, { key: '_redo', type: 'editor_redo' })
-        )
-      );
-    }
-  }]);
+    var className = 'RichEditor-styleButton';
+    return _react2.default.createElement(
+      'div',
+      { className: 'RichEditor-controls' },
+      _react2.default.createElement(
+        'span',
+        { className: 'RichEditor-styleButton', onClick: function onClick() {
+            return _this2.props.onToggle("undo");
+          }, title: this.props.lang.undo },
+        _react2.default.createElement(_antd.Icon, { key: '_undo', type: 'editor_undo' })
+      ),
+      _react2.default.createElement(
+        'span',
+        { className: 'RichEditor-styleButton', onClick: function onClick() {
+            return _this2.props.onToggle("redo");
+          }, title: this.props.lang.redo },
+        _react2.default.createElement(_antd.Icon, { key: '_redo', type: 'editor_redo' })
+      )
+    );
+  };
 
   return undoRedo;
 }(_react.Component);

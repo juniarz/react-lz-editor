@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import StyleButton from "./styleButton"
 class InlineStyleControls extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const {editorState,onToggle,lang} = this.props;
+    const { editorState, onToggle, lang } = this.props;
     const INLINE_STYLES = [
       {
         text: lang.textBold,
@@ -23,6 +23,10 @@ class InlineStyleControls extends Component {
         text: lang.textCode,
         style: 'CODE',
         label: "editor_e"
+      }, {
+        text: lang.textStrikethrough,
+        style: 'STRIKETHROUGH',
+        label: 'editor_s'
       }
     ];
     let currentStyle = editorState
@@ -36,7 +40,7 @@ class InlineStyleControls extends Component {
           active={currentStyle.has(type.style)}
           label={type.label}
           onToggle={onToggle}
-          style={type.style}/>)}
+          style={type.style} />)}
       </div>
     )
   }

@@ -1,11 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+exports.__esModule = true;
 exports.default = stateFromElement;
 
 var _replaceTextWithMeta3 = require('./replaceTextWithMeta');
@@ -147,204 +142,195 @@ var BlockGenerator = function () {
     this.depth = 0;
   }
 
-  _createClass(BlockGenerator, [{
-    key: 'process',
-    value: function process(element) {
-      this.processBlockElement(element);
-      var contentBlocks = [];
-      this.blockList.forEach(function (block) {
-        var _concatFragments = concatFragments(block.textFragments),
-            text = _concatFragments.text,
-            characterMeta = _concatFragments.characterMeta;
+  BlockGenerator.prototype.process = function process(element) {
+    this.processBlockElement(element);
+    var contentBlocks = [];
+    this.blockList.forEach(function (block) {
+      var _concatFragments = concatFragments(block.textFragments),
+          text = _concatFragments.text,
+          characterMeta = _concatFragments.characterMeta;
 
-        var includeEmptyBlock = false;
+      var includeEmptyBlock = false;
 
-        if (text === SOFT_BREAK_PLACEHOLDER) {
-          includeEmptyBlock = true;
-          text = '';
-        }
-        if (block.tagName === 'pre') {
-          var _trimLeadingNewline = trimLeadingNewline(text, characterMeta);
+      if (text === SOFT_BREAK_PLACEHOLDER) {
+        includeEmptyBlock = true;
+        text = '';
+      }
+      if (block.tagName === 'pre') {
+        var _trimLeadingNewline = trimLeadingNewline(text, characterMeta);
 
-          text = _trimLeadingNewline.text;
-          characterMeta = _trimLeadingNewline.characterMeta;
-        } else {
-          var _collapseWhiteSpace = collapseWhiteSpace(text, characterMeta);
-
-          text = _collapseWhiteSpace.text;
-          characterMeta = _collapseWhiteSpace.characterMeta;
-        }
-
-        text = text.split(SOFT_BREAK_PLACEHOLDER).join('\n').replace("　", "");
-
-        if ((text.length || includeEmptyBlock) && text != "\n") {
-          contentBlocks.push(new _draftJs.ContentBlock({
-            key: (0, _draftJs.genKey)(),
-            text: text,
-            type: block.type,
-            characterList: characterMeta.toList(),
-            depth: block.depth,
-            data: block.data
-          }));
-        }
-      });
-      if (contentBlocks.length) {
-        return contentBlocks;
+        text = _trimLeadingNewline.text;
+        characterMeta = _trimLeadingNewline.characterMeta;
       } else {
-        return [EMPTY_BLOCK];
-      }
-    }
-  }, {
-    key: 'getBlockTypeFromTagName',
-    value: function getBlockTypeFromTagName(tagName) {
-      switch (tagName) {
-        case 'li':
-          {
-            var parent = this.blockStack.slice(-1)[0];
-            return parent.tagName === 'ol' ? _main.BLOCK_TYPE.ORDERED_LIST_ITEM : _main.BLOCK_TYPE.UNORDERED_LIST_ITEM;
-          }
-        case 'blockquote':
-          {
-            return _main.BLOCK_TYPE.BLOCKQUOTE;
-          }
-        case 'h1':
-          {
-            return _main.BLOCK_TYPE.HEADER_ONE;
-          }
-        case 'h2':
-          {
-            return _main.BLOCK_TYPE.HEADER_TWO;
-          }
-        case 'h3':
-          {
-            return _main.BLOCK_TYPE.HEADER_THREE;
-          }
-        case 'h4':
-          {
-            return _main.BLOCK_TYPE.HEADER_FOUR;
-          }
-        case 'h5':
-          {
-            return _main.BLOCK_TYPE.HEADER_FIVE;
-          }
-        case 'h6':
-          {
-            return _main.BLOCK_TYPE.HEADER_SIX;
-          }
-        case 'pre':
-          {
-            return _main.BLOCK_TYPE.CODE;
-          }
+        var _collapseWhiteSpace = collapseWhiteSpace(text, characterMeta);
 
-        default:
-          {
-            return _main.BLOCK_TYPE.UNSTYLED;
-          }
+        text = _collapseWhiteSpace.text;
+        characterMeta = _collapseWhiteSpace.characterMeta;
       }
+
+      text = text.split(SOFT_BREAK_PLACEHOLDER).join('\n').replace("　", "");
+
+      if ((text.length || includeEmptyBlock) && text != "\n") {
+        contentBlocks.push(new _draftJs.ContentBlock({
+          key: (0, _draftJs.genKey)(),
+          text: text,
+          type: block.type,
+          characterList: characterMeta.toList(),
+          depth: block.depth,
+          data: block.data
+        }));
+      }
+    });
+    if (contentBlocks.length) {
+      return contentBlocks;
+    } else {
+      return [EMPTY_BLOCK];
     }
-  }, {
-    key: 'processBlockElement',
-    value: function processBlockElement(element) {
-      var tagName = element.nodeName.toLowerCase();
-      var type = this.getBlockTypeFromTagName(tagName);
-      var hasDepth = canHaveDepth(type);
-      var allowRender = !SPECIAL_ELEMENTS.hasOwnProperty(tagName);
-      var blockData = new Map();
-      if (element.style && element.style.textAlign) {
-        blockData.set("textAlignment", element.style.textAlign);
-      }
-      var block = {
-        tagName: tagName,
-        textFragments: [],
-        type: type,
-        styleStack: [NO_STYLE],
-        entityStack: [NO_ENTITY],
-        depth: hasDepth ? this.depth : 0,
-        data: blockData
-      };
-      if (allowRender) {
-        this.blockList.push(block);
-        if (hasDepth) {
-          this.depth += 1;
+  };
+
+  BlockGenerator.prototype.getBlockTypeFromTagName = function getBlockTypeFromTagName(tagName) {
+    switch (tagName) {
+      case 'li':
+        {
+          var parent = this.blockStack.slice(-1)[0];
+          return parent.tagName === 'ol' ? _main.BLOCK_TYPE.ORDERED_LIST_ITEM : _main.BLOCK_TYPE.UNORDERED_LIST_ITEM;
         }
-      }
-      this.blockStack.push(block);
-      if (element.childNodes != null) {
-        Array.from(element.childNodes).forEach(this.processNode, this);
-      }
-      this.blockStack.pop();
-      if (allowRender && hasDepth) {
-        this.depth -= 1;
-      }
-    }
-  }, {
-    key: 'processInlineElement',
-    value: function processInlineElement(element) {
-      var tagName = element.nodeName.toLowerCase();
-      if (tagName === 'br') {
-        this.processText(SOFT_BREAK_PLACEHOLDER);
-        return;
-      }
-      var block = this.blockStack.slice(-1)[0];
-      var style = block.styleStack.slice(-1)[0];
-      var entityKey = block.entityStack.slice(-1)[0];
-      style = addStyleFromTagName(style, tagName, this.options.elementStyles, element);
-      if (ELEM_TO_ENTITY.hasOwnProperty(tagName)) {
-        entityKey = ELEM_TO_ENTITY[tagName](tagName, element) || entityKey;
-      }
-      block.styleStack.push(style);
-      block.entityStack.push(entityKey);
-      if (element.childNodes != null) {
-        Array.from(element.childNodes).forEach(this.processNode, this);
-      }
-      if (SELF_CLOSING_ELEMENTS.hasOwnProperty(tagName)) {
-        this.processText('~');
-      }
-      block.entityStack.pop();
-      block.styleStack.pop();
-    }
-  }, {
-    key: 'processTextNode',
-    value: function processTextNode(node) {
-      var text = node.nodeValue;
-
-      text = text.replace(LINE_BREAKS, '\n');
-
-      text = text.split(ZERO_WIDTH_SPACE).join(SOFT_BREAK_PLACEHOLDER);
-      this.processText(text);
-    }
-  }, {
-    key: 'processText',
-    value: function processText(text) {
-      var block = this.blockStack.slice(-1)[0];
-      var style = block.styleStack.slice(-1)[0];
-      var entity = block.entityStack.slice(-1)[0];
-      var charMetadata = _draftJs.CharacterMetadata.create({
-        style: style,
-        entity: entity
-      });
-      var seq = (0, _immutable.Repeat)(charMetadata, text.length);
-      block.textFragments.push({
-        text: text,
-        characterMeta: seq
-      });
-    }
-  }, {
-    key: 'processNode',
-    value: function processNode(node) {
-      if (node.nodeType === _syntheticDom.NODE_TYPE_ELEMENT) {
-        var element = node;
-        var _tagName = element.nodeName.toLowerCase();
-        if (INLINE_ELEMENTS.hasOwnProperty(_tagName)) {
-          this.processInlineElement(element);
-        } else {
-          this.processBlockElement(element);
+      case 'blockquote':
+        {
+          return _main.BLOCK_TYPE.BLOCKQUOTE;
         }
-      } else if (node.nodeType === _syntheticDom.NODE_TYPE_TEXT) {
-        this.processTextNode(node);
+      case 'h1':
+        {
+          return _main.BLOCK_TYPE.HEADER_ONE;
+        }
+      case 'h2':
+        {
+          return _main.BLOCK_TYPE.HEADER_TWO;
+        }
+      case 'h3':
+        {
+          return _main.BLOCK_TYPE.HEADER_THREE;
+        }
+      case 'h4':
+        {
+          return _main.BLOCK_TYPE.HEADER_FOUR;
+        }
+      case 'h5':
+        {
+          return _main.BLOCK_TYPE.HEADER_FIVE;
+        }
+      case 'h6':
+        {
+          return _main.BLOCK_TYPE.HEADER_SIX;
+        }
+      case 'pre':
+        {
+          return _main.BLOCK_TYPE.CODE;
+        }
+
+      default:
+        {
+          return _main.BLOCK_TYPE.UNSTYLED;
+        }
+    }
+  };
+
+  BlockGenerator.prototype.processBlockElement = function processBlockElement(element) {
+    var tagName = element.nodeName.toLowerCase();
+    var type = this.getBlockTypeFromTagName(tagName);
+    var hasDepth = canHaveDepth(type);
+    var allowRender = !SPECIAL_ELEMENTS.hasOwnProperty(tagName);
+    var blockData = new Map();
+    if (element.style && element.style.textAlign) {
+      blockData.set("textAlignment", element.style.textAlign);
+    }
+    var block = {
+      tagName: tagName,
+      textFragments: [],
+      type: type,
+      styleStack: [NO_STYLE],
+      entityStack: [NO_ENTITY],
+      depth: hasDepth ? this.depth : 0,
+      data: blockData
+    };
+    if (allowRender) {
+      this.blockList.push(block);
+      if (hasDepth) {
+        this.depth += 1;
       }
     }
-  }]);
+    this.blockStack.push(block);
+    if (element.childNodes != null) {
+      Array.from(element.childNodes).forEach(this.processNode, this);
+    }
+    this.blockStack.pop();
+    if (allowRender && hasDepth) {
+      this.depth -= 1;
+    }
+  };
+
+  BlockGenerator.prototype.processInlineElement = function processInlineElement(element) {
+    var tagName = element.nodeName.toLowerCase();
+    if (tagName === 'br') {
+      this.processText(SOFT_BREAK_PLACEHOLDER);
+      return;
+    }
+    var block = this.blockStack.slice(-1)[0];
+    var style = block.styleStack.slice(-1)[0];
+    var entityKey = block.entityStack.slice(-1)[0];
+    style = addStyleFromTagName(style, tagName, this.options.elementStyles, element);
+    if (ELEM_TO_ENTITY.hasOwnProperty(tagName)) {
+      entityKey = ELEM_TO_ENTITY[tagName](tagName, element) || entityKey;
+    }
+    block.styleStack.push(style);
+    block.entityStack.push(entityKey);
+    if (element.childNodes != null) {
+      Array.from(element.childNodes).forEach(this.processNode, this);
+    }
+    if (SELF_CLOSING_ELEMENTS.hasOwnProperty(tagName)) {
+      this.processText('~');
+    }
+    block.entityStack.pop();
+    block.styleStack.pop();
+  };
+
+  BlockGenerator.prototype.processTextNode = function processTextNode(node) {
+    var text = node.nodeValue;
+
+    text = text.replace(LINE_BREAKS, '\n');
+
+    text = text.split(ZERO_WIDTH_SPACE).join(SOFT_BREAK_PLACEHOLDER);
+    this.processText(text);
+  };
+
+  BlockGenerator.prototype.processText = function processText(text) {
+    var block = this.blockStack.slice(-1)[0];
+    var style = block.styleStack.slice(-1)[0];
+    var entity = block.entityStack.slice(-1)[0];
+    var charMetadata = _draftJs.CharacterMetadata.create({
+      style: style,
+      entity: entity
+    });
+    var seq = (0, _immutable.Repeat)(charMetadata, text.length);
+    block.textFragments.push({
+      text: text,
+      characterMeta: seq
+    });
+  };
+
+  BlockGenerator.prototype.processNode = function processNode(node) {
+    if (node.nodeType === _syntheticDom.NODE_TYPE_ELEMENT) {
+      var element = node;
+      var _tagName = element.nodeName.toLowerCase();
+      if (INLINE_ELEMENTS.hasOwnProperty(_tagName)) {
+        this.processInlineElement(element);
+      } else {
+        this.processBlockElement(element);
+      }
+    } else if (node.nodeType === _syntheticDom.NODE_TYPE_TEXT) {
+      this.processTextNode(node);
+    }
+  };
 
   return BlockGenerator;
 }();

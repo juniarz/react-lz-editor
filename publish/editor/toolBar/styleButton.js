@@ -1,16 +1,10 @@
 'use strict';
 
-
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _antd = require('antd');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,7 +20,7 @@ var StyleButton = function (_React$Component) {
   function StyleButton() {
     _classCallCheck(this, StyleButton);
 
-    var _this = _possibleConstructorReturn(this, (StyleButton.__proto__ || Object.getPrototypeOf(StyleButton)).call(this));
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this));
 
     _this.onToggle = function (e) {
       e.preventDefault();
@@ -35,36 +29,33 @@ var StyleButton = function (_React$Component) {
     return _this;
   }
 
-  _createClass(StyleButton, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+  StyleButton.prototype.render = function render() {
+    var _this2 = this;
 
-      var className = 'RichEditor-styleButton';
-      if (this.props.active) {
-        className += ' RichEditor-activeButton ant-btn ant-btn-primary ant-btn-icon-only ';
-      }
-
-      return _react2.default.createElement(
-        'span',
-        null,
-        _react2.default.createElement(
-          'span',
-          { className: className, onClick: this.onToggle, title: this.props.text },
-          _react2.default.createElement(_icon2.default, { type: '' + this.props.label })
-        ),
-        function () {
-          if (!!_this2.props.split) {
-            return _react2.default.createElement(
-              'span',
-              { className: 'RichEditor-controls-split' },
-              _this2.props.split
-            );
-          }
-        }()
-      );
+    var className = 'RichEditor-styleButton';
+    if (this.props.active) {
+      className += ' RichEditor-activeButton ant-btn ant-btn-primary ant-btn-icon-only ';
     }
-  }]);
+
+    return _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement(
+        'span',
+        { className: className, onClick: this.onToggle, title: this.props.text },
+        _react2.default.createElement(_antd.Icon, { type: '' + this.props.label })
+      ),
+      function () {
+        if (!!_this2.props.split) {
+          return _react2.default.createElement(
+            'span',
+            { className: 'RichEditor-controls-split' },
+            _this2.props.split
+          );
+        }
+      }()
+    );
+  };
 
   return StyleButton;
 }(_react2.default.Component);

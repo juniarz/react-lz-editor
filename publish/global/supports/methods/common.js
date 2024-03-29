@@ -1,20 +1,14 @@
 'use strict';
 
-
-
-var _message = require('antd/lib/message');
-
-var _message2 = _interopRequireDefault(_message);
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _antd = require('antd');
 
 var _forIn = require('lodash/forIn');
 
 var _forIn2 = _interopRequireDefault(_forIn);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var commonFun = {
   test: function test(a) {
@@ -373,9 +367,9 @@ var commonFun = {
     },
     retResult: function retResult(data, path) {
       if (data.rc == 0) {
-        _message2.default.success("操作成功", 4);
+        _antd.message.success("操作成功", 4);
       } else {
-        _message2.default.error("操作失败:" + data.des, 4);
+        _antd.message.error("操作失败:" + data.des, 4);
       }
     }
   },
@@ -437,7 +431,7 @@ var commonFun = {
     mergeDedupe: function mergeDedupe(arr) {
       var _ref;
 
-      return [].concat(_toConsumableArray(new Set((_ref = []).concat.apply(_ref, _toConsumableArray(arr)))));
+      return [].concat(new Set((_ref = []).concat.apply(_ref, arr)));
     },
     onlyIn1st: function onlyIn1st(a, b) {
       var onlyInA = a.filter(function (current) {
@@ -941,7 +935,7 @@ var commonFun = {
       } else {
         var newEl = document.createElement('div');
         newEl.setAttribute('id', 'messageDiv');
-        newEl.innerHTML = _message2.default;
+        newEl.innerHTML = message;
         document.querySelector("body").appendChild(newEl);
         messageDiv = newEl;
       }
